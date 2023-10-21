@@ -79,7 +79,7 @@ class GameScreenViewModel(
 
     fun startNewGame() {
         saveScore()
-        resetGame()
+
     }
 
     private fun saveScore() {
@@ -90,6 +90,7 @@ class GameScreenViewModel(
                 round = _currentRound.value,
                 score = _totalScore.value
             )
+            resetGame()
         }
     }
 
@@ -110,22 +111,6 @@ class GameScreenViewModel(
     fun onRoundIncrement() {
         _currentRound.value += 1
         _targetValue.value = newTargetValue()
-    }
-    private fun saveScoreFixed(round: Int, score: Int) {
-        viewModelScope.launch(
-            context = Dispatchers.IO
-        ) {
-            repository.saveScore(
-                round = _currentRound.value,
-                score = _totalScore.value
-            )
-
-        }
-    }
-
-    fun startNewGameFixed() {
-        saveScoreFixed(round = _currentRound.value, score = _totalScore.value)
-        resetGame()
     }
 
 }
